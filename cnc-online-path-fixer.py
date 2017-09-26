@@ -77,7 +77,7 @@ for subkey in SUBKEYS:
 for value in VALUES:
   print("Searching for value \"{}\" ... ".format(value), end='')
   if value in values_found.keys():
-    print("found", end='')
+    print("found (\"{}\")".format(values_found[value][1]), end='')
   else:
     print("not found", end='')
   print(".")
