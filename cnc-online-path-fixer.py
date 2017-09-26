@@ -3,8 +3,8 @@ import sys
 import os
 
 REG_KEYS = (
-  ("Zero Hour Retail / Origin (32-bit Windows)", "SOFTWARE\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour"),
-  ("Zero Hour Retail / Origin (64-bit Windows)", "SOFTWARE\\WOW6432Node\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour"),
+  ("Zero Hour Retail /(32-bit Windows)", "SOFTWARE\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour"),
+  ("Zero Hour Retail /(64-bit Windows)", "SOFTWARE\\WOW6432Node\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour"),
 )
 
 SUBKEYS = (
@@ -12,11 +12,9 @@ SUBKEYS = (
   )
 
 VALUES = (
-  "Language",
-  "UserDataLeafName",
-  "Version",
-  "MapPackVersion",
   "InstallPath",
+  "Language",
+  "Version",
   )
 
 def get_subkeys(key):
