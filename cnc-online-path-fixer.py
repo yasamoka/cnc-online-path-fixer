@@ -1,14 +1,19 @@
 import sys
 from PyQt5 import QtGui
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, QCoreApplication
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QHBoxLayout, QVBoxLayout, QFileDialog, QLabel, QMessageBox
 import PyQt5.QtWidgets as QtWidgets
 from registry_manager import RegistryManager
 
 APP_TITLE = "C&C Online Path Fixer"
-WINDOW_SIZE = (500, 200)
+ICON_PATH = "Icon_5.ico"
+WINDOW_SIZE = (500, 120)
 
-class Example(QWidget):
+class NoRegistryKeyFoundException(Exception):
+  pass
+
+class Window(QWidget):
 
   def __init__(self, window_size):
     super().__init__()
@@ -17,11 +22,14 @@ class Example(QWidget):
     try:
       assert self.registry_manager_instance.exists()
     except AssertionError:
-      raise Exception("Zero Hour registry key not found.")
+      raise NoRegistryKeyFoundException()
+
     self.initUI()
 
   def initUI(self):
     self.resize(self.window_width, self.window_height)
+    self.setFixedHeight(self.window_height)
+    self.setWindowIcon(icon)
     self.setWindowTitle(APP_TITLE)
 
     vbox = QVBoxLayout()
@@ -53,6 +61,7 @@ class Example(QWidget):
     self.change_button.pressed.connect(self.changeButtonClicked)
     hbox_change.addStretch(1)
     hbox_change.addWidget(self.change_button)
+    hbox_change.addStretch(1)
     vbox.addLayout(hbox_change)
 
     self.setLayout(vbox)
@@ -96,5 +105,15 @@ class Example(QWidget):
 
 # start up application
 app = QApplication(sys.argv)
-ex = Example(WINDOW_SIZE)
-sys.exit(app.exec_())
+icon = QIcon(ICON_PATH)
+try:
+  window = Window(WINDOW_SIZE)
+  sys.exit(app.exec_())
+except NoRegistryKeyFoundException:
+  error_message = QMessageBox()
+  error_message.setWindowTitle(APP_TITLE)
+  error_message.setWindowIcon(icon)
+  error_message.setIcon(QMessageBox.Critical)
+  error_message.setText("No Zero Hour registry key found. Make sure you are running this tool with Administrator privileges.")
+  error_message.show()
+  error_message.exec()
