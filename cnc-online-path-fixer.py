@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QHBox
 import PyQt5.QtWidgets as QtWidgets
 from registry_manager import RegistryManager
 
+QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+
 APP_TITLE = "C&C Online Path Fixer"
 ICON_PATH = "Icon_5.ico"
 WINDOW_SIZE = (500, 120)
